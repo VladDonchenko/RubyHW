@@ -20,13 +20,14 @@ p"_______8$***$$8**$8*$$****$88$8$8*8**888888"
 p"_____8$***$$$****8$$$******88*__*888888*"
 p"______8888$$88888$$8888$$$88"
 p"____________************* "
+p"_______________________ИНСТРУКЦИЯ__________________________"
 
 class Cat
 
 
 def initialize name
     @name = name
-    @sleep = 100
+    @sleep = 0
     @full_stomach = 100  #  Он сыт.
     @funny =  100  #  Ему не надо гулять.
     @toilet = 0
@@ -36,18 +37,11 @@ def initialize name
     puts @name + ' родился.'
 end
 
-#def passage_of_time
-#	sleep 1
-#	@full_stomach -=1
-#	@funny -=1
-#	if @stomach == 0
-#		p "WASTED"
-#	end
-#end
-
 def feed
     puts "Вы кормите #{@name}."
     @full_stomach +=20
+        @sleep += 5
+    	@clean -=2
     if @full_stomach >100
     	@full_stomach = 100
     end
@@ -56,6 +50,7 @@ end
 def walk
     puts "Вы выгуливаете #{@name}."
     @funny += 50
+    @clean -=2
     if @funny > 100
     	@funny =100
     end
@@ -64,6 +59,8 @@ end
 def piss
 	puts "Вы сводили в туалет #{@name}."
 	@toilet -= 85
+	@sleep += 5
+	@clean -= 2
 	if @toilet < 0 
 		@toilet = 0
 	end
@@ -72,6 +69,7 @@ end
 def clean 
 	puts "Вы почистили комнату #{@name}"
 	@clean += 100
+	@sleep += 15	
 	if @clean > 100
 		@clean = 100
 	end
@@ -80,6 +78,11 @@ end
 def fix_helth
 	puts "Вы полечили #{@name}, теперь он(а) чувствует себя лучше"
 	@health +=50
+	@sleep +=10
+	@clean -=2
+	if @health >= 100
+		@health = 100
+	end
 end
 #_________________________________________________________________________________
 
@@ -94,16 +97,22 @@ def print_points
 end
 
 def go_to_sleep
-	@sleep += rand(25..100)
-	if @asleep >= 50
+	@sleep -= rand(25..100)
+	if @sleep <= 50
 		p"I slept very well"
 		@health += rand(0..15)
+		@clean -=15
 	else
 		p"I didn't sleep well"
+		@clean -=15
 	end
 end
 
+def waiting
+	changing_time()
+end
 
+private
 def changing_time
 	@full_stomach -=10
 	@funny -=15
@@ -154,13 +163,21 @@ def changing_time
 		p"I died from this smell"
 	end
 
-	if @sleep <= 15
+	if @sleep >= 85
 		p"I want to sleep...ZZzz"
 	end
 
-	if @sleep <= 0
+	if @sleep >= 100
 		p"Please, put me to sleep"
-		@helth -= 50
+		@health -= 50
+	end
+
+	if @sleep >= 100
+		@sleep = 100
+	end
+
+	if @health >= 100
+		@health = 100
 	end
 
 	if @health <= 0
@@ -186,7 +203,7 @@ pet = Cat.new"#{name}"
 
 x = gets.chomp.to_i
 while x !=0
-	pet.changing_time()
+	pet.waiting()
 	case x
 	when 1
 		pet.feed
@@ -213,7 +230,6 @@ while x !=0
 		pet.print_points
 		x = gets.chomp.to_i
 	when 9
-		pet.changing_time()
 		pet.print_points
 		x = gets.chomp.to_i
 	else
