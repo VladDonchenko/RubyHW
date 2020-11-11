@@ -13,11 +13,11 @@ def initialize name
     @shower = 100
     headline()
 
-    puts @name + ' родился.'
+    puts @name + ' was born.'
 end
 
 def feed
-    puts "Вы кормите #{@name}."
+    puts "You fed #{@name}."
     @full_stomach +=20
         @sleep += 5
     	@clean -=2
@@ -26,7 +26,7 @@ def feed
 end
 #_________________________________________________________________________________
 def walk
-    puts "Вы выгуливаете #{@name}."
+    puts "You took a walk with #{@name}."
     @funny += 50
     @clean -=2
     @shower -=10
@@ -35,7 +35,7 @@ end
 
 #_________________________________________________________________________________
 def piss
-	puts "Вы сводили в туалет #{@name}."
+	puts "You took #{@name} to the bathroom."
 	@toilet -= 85
 	@sleep += 5
 	@clean -= 2
@@ -45,7 +45,7 @@ end
 
 #_________________________________________________________________________________
 def clean 
-	puts "Вы почистили комнату #{@name}"
+	puts "You cleaned the room #{@name}"
 	@clean += 100
 	@sleep += 15
 	@shower -= 10
@@ -53,7 +53,7 @@ def clean
 end	
 #_________________________________________________________________________________
 def fix_helth
-	puts "Вы полечили #{@name}, теперь он(а) чувствует себя лучше"
+	puts "You are healed #{@name}, now he/she feels better"
 	@health += 50
 	@sleep += 10
 	@clean -= 2
@@ -89,7 +89,7 @@ def random_frazes
 end
 
 def wash
-	puts "Bы покупали #{@name}"
+	puts "You washed #{@name}"
 	@shower = 100
 	chack()
 end
