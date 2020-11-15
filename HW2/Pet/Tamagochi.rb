@@ -249,6 +249,7 @@ def help
 	p 'Press 9 to skip some time'
 end
 
+p "Enter your pet`s name:"
 name = gets.chomp
 pet = Cat.new"#{name}"
 x = gets.chomp.to_s
