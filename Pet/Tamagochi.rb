@@ -12,6 +12,8 @@ def initialize name
     @clean = 100
     @health = 100
     @shower = 100
+    @emoji = '&#128513;'
+    @html = Remaker.new
     headline()
 
     puts @name + ' was born.'
@@ -23,7 +25,10 @@ def feed
         @sleep += 5
     	@clean -=2
     	@shower -=2
+    	@emoji = '&#128523;'
+    	changing_time()
     	chack()
+    	@html.html_for_pet(print_points_html.to_s)
 end
 #_________________________________________________________________________________
 def walk
@@ -31,7 +36,10 @@ def walk
     @funny += 50
     @clean -=2
     @shower -=10
+    @emoji ='&#128540;'
+    changing_time()
     chack()
+    @html.html_for_pet(print_points_html.to_s)
 end
 
 #_________________________________________________________________________________
@@ -41,7 +49,10 @@ def piss
 	@sleep += 5
 	@clean -= 2
 	@shower -= 5
+	@emoji ='&#128517;'
+	changing_time()
 	chack()
+	@html.html_for_pet(print_points_html.to_s)
 end
 
 #_________________________________________________________________________________
@@ -50,7 +61,10 @@ def clean
 	@clean += 100
 	@sleep += 15
 	@shower -= 10
+	@emoji ='&#127775;'
+	changing_time()
 	chack()
+	@html.html_for_pet(print_points_html.to_s)
 end	
 #_________________________________________________________________________________
 def fix_helth
@@ -58,7 +72,10 @@ def fix_helth
 	@health += 50
 	@sleep += 10
 	@clean -= 2
+	@emoji ='&#128522;'
+	changing_time()
 	chack()
+	@html.html_for_pet(print_points_html.to_s)
 end
 #_________________________________________________________________________________
 
@@ -71,39 +88,11 @@ def print_points
 	p "Чистота комнаты:#{@clean}"
 	p "Усталость:#{@sleep}"
 	p "Чистота:#{@shower}"
+
 end
 
-def print_emoji
-	sum = @health. + @full_stomach + @funny +@clean + @shower
-	if sum / 5 >= 80
-		"&#128513;"
-	end
 
-	if sum / 5 >= 30 and sum < 50
-		"&#128528;"
-	end
 
-	if sum / 5 >= 1 and sum < 30
-		"&#128534;"
-	end
-
-	if @health == 0
-		"&#128565;;"
-	end
-end
-
-def print_points_html
-	return "
-	Имя:#{@name} <br>
-	Здоровье:#{@health}<br>
-	Сытость:#{@full_stomach}<br>
-	Настроение:#{@funny}<br>
-	Нужда:#{@toilet}<br>
-	Чистота комнаты:#{@clean}<br>
-	Усталость:#{@sleep}<br>
-	Чистота:#{@shower}<br></p>" +
-	`<p style="font-size:10rem;">#{print_emoji}</p>`
-end
 
 def random_frazes
     a1 = "I'm sorry but I'm a little busy right now"
@@ -124,7 +113,9 @@ end
 def wash
 	puts "You washed #{@name}"
 	@shower = 100
+	changing_time()
 	chack()
+	@html.html_for_pet(print_points_html.to_s)
 end
 
 def go_to_sleep
@@ -137,11 +128,14 @@ def go_to_sleep
 		cat("I didn't sleep well")
 		@clean -=15
 	end
+	changing_time()
 	chack()
+	@html.html_for_pet(print_points_html.to_s)
 end
 
 def waiting
 	changing_time()
+	@html.html_for_pet(print_points_html.to_s)
 end
 
 
@@ -247,6 +241,7 @@ def chack
 	end
 	if @health <= 0
 		@health = 0
+		@emoji = '&#128565;'
 	end
 	if @shower >= 100
 		@shower = 100
@@ -254,6 +249,14 @@ def chack
 	if @shower <= 0
 		@shower = 0
 	end
+
+end
+
+
+def print_points_html
+	status ="Имя:#{@name} <br> Здоровье:#{@health}<br> Сытость:#{@full_stomach}<br> Настроение:#{@funny}<br> Нужда:#{@toilet}<br>"
+	statsus1 = "Чистота комнаты:#{@clean}<br> Усталость:#{@sleep}<br> Чистота:#{@shower}<br></p> <p style=""font-size:10rem;"">#{@emoji}</p>"
+	return status+statsus1
 end
 
 private
@@ -263,7 +266,7 @@ def changing_time
 	@toilet +=14
 	@sleep += 5
 end
-end
+
 end
 
 
@@ -285,69 +288,45 @@ p "Enter your pet`s name:"
 name = gets.chomp
 pet = Cat.new"#{name}"
 x = gets.chomp.to_s
-html = Transporter.new()
+html = Remaker.new
+#html.html_for_pet(pet.print_points_html.to_s)
 while x !="0"
 
 	case x
 	when "1"
 		pet.feed
 		pet.print_points
-		pet.waiting()
-		html.
-		
 		x = gets.chomp.to_s
 	when "2"
 		pet.walk
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "3"
 		pet.piss
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "4"
 		pet.clean
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "5"
 		pet.fix_helth
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "6" 
 		pet.go_to_sleep
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "7" 
 		pet.wash
 		pet.print_points
-		pet.waiting()
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "8" 
 		pet.random_frazes
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
 	when "9"
 		pet.waiting
 		pet.print_points
-		content = MyGem::Example.new.get(pet.print_points_html)
-		MyGem::Example.new.trans(content)
 		x = gets.chomp.to_s
     when "help"
     	help()
@@ -357,4 +336,3 @@ while x !="0"
 		x = gets.chomp.to_s
 	end
 end
-
